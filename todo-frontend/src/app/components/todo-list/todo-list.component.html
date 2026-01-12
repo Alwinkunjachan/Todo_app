@@ -1,0 +1,57 @@
+<div class="todo-list-container">
+  <div class="filter-buttons">
+    <button 
+      [class.active]="filter === 'all'"
+      (click)="setFilter('all')">
+      All
+    </button>
+    <button 
+      [class.active]="filter === 'active'"
+      (click)="setFilter('active')">
+      Active
+    </button>
+    <button 
+      [class.active]="filter === 'completed'"
+      (click)="setFilter('completed')">
+      Completed
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading todos...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+    <button (click)="loadTodos()" class="retry-btn">Retry</button>
+  </div>
+
+  <div *ngIf="!loading && !error && filteredTodos.length === 0" class="empty-state">
+    <p>No todos found. Create one to get started!</p>
+  </div>
+
+  <ul class="todo-list" *ngIf="!loading && !error && filteredTodos.length > 0">
+    <li *ngFor="let todo of filteredTodos" class="todo-item" [class.completed]="todo.completed">
+      <div class="todo-content">
+        <input 
+          type="checkbox" 
+          [checked]="todo.completed"
+          (change)="toggleComplete(todo)"
+          class="todo-checkbox">
+        <div class="todo-text">
+          <h3 [class.completed-text]="todo.completed">{{ todo.title }}</h3>
+          <p *ngIf="todo.description" class="todo-description">{{ todo.description }}</p>
+          <span class="todo-date" *ngIf="todo.created_at">
+            Created: {{ todo.created_at | date:'short' }}
+          </span>
+        </div>
+      </div>
+      <button 
+        (click)="deleteTodo(todo.id!)" 
+        class="delete-btn"
+        title="Delete todo">
+        🗑️
+      </button>
+    </li>
+  </ul>
+</div>
