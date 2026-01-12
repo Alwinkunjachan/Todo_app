@@ -41,8 +41,9 @@ export class TodoListComponent implements OnInit {
   }
 
   toggleComplete(todo: Todo): void {
+    if (!todo.id) return;
     const updatedTodo = { ...todo, completed: !todo.completed };
-    this.todoService.updateTodo(todo.id!, updatedTodo).subscribe({
+    this.todoService.updateTodo(todo.id, updatedTodo).subscribe({
       next: () => {
         this.loadTodos();
       },

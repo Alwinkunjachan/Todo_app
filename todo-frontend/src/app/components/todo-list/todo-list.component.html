@@ -47,11 +47,11 @@
         </div>
       </div>
       <button 
-        (click)="deleteTodo(todo.id!)" 
-        class="delete-btn"
-        title="Delete todo">
-        🗑️
-      </button>
+      (click)="todo.id && deleteTodo(todo.id)" 
+      class="delete-btn"
+      title="Delete todo">
+      🗑️
+    </button>
     </li>
   </ul>
 </div>
